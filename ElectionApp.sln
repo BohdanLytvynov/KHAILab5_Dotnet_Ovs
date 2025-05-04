@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectionApp", "ElectionApp\ElectionApp.csproj", "{3F20ABC7-B539-4D84-8511-0E84AC46543F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{90982287-4F99-4B6A-B17E-C9597377BD6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{325B95AC-941D-43DE-998D-724348122F5D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F20ABC7-B539-4D84-8511-0E84AC46543F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F20ABC7-B539-4D84-8511-0E84AC46543F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F20ABC7-B539-4D84-8511-0E84AC46543F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F20ABC7-B539-4D84-8511-0E84AC46543F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90982287-4F99-4B6A-B17E-C9597377BD6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90982287-4F99-4B6A-B17E-C9597377BD6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90982287-4F99-4B6A-B17E-C9597377BD6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90982287-4F99-4B6A-B17E-C9597377BD6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{325B95AC-941D-43DE-998D-724348122F5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{325B95AC-941D-43DE-998D-724348122F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{325B95AC-941D-43DE-998D-724348122F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{325B95AC-941D-43DE-998D-724348122F5D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
