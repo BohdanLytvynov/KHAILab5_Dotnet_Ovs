@@ -26,6 +26,18 @@ namespace DAL.Models
         #endregion
 
         #region Ctor
+        public Voter(Voter other)
+        {
+            Id = other.Id;
+            Surename = other.Surename;
+            Name = other.Name;
+            Lastname = other.Lastname;
+            CountyNumber = other.CountyNumber;
+            Party = other.Party;
+            Age = other.Age;
+            ProfessionName = other.ProfessionName;
+        }
+
         public Voter() : base()
         {
             
@@ -76,7 +88,18 @@ namespace DAL.Models
                 .Append(ProfessionName);
 
             return sb.ToString();
-        }        
+        }
+
+        public void UpdateValues(Voter other)
+        {            
+            Surename = other.Surename;
+            Name = other.Name;
+            Lastname = other.Lastname;
+            CountyNumber = other.CountyNumber;
+            Party = other.Party;
+            Age = other.Age;
+            ProfessionName = other.ProfessionName;
+        }
         #endregion
 
         #region Comparer

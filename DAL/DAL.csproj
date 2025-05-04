@@ -44,11 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DataContext.cs" />
     <Compile Include="Helpers\IOHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Models\IModelBase.cs" />
     <Compile Include="Models\Voter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Interfaces\IRepositoryBase.cs" />
+    <Compile Include="Repositories\Interfaces\IVoterRepository.cs" />
+    <Compile Include="Repositories\VoterRepository.cs" />
+    <Compile Include="RepositoryWrapper\IRepositoryWrapper.cs" />
+    <Compile Include="RepositoryWrapper\RepositoryWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

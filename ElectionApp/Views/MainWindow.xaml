@@ -10,7 +10,56 @@
         Title="{Binding Title}"
         d:DataContext="{d:DesignInstance mainvm:MainWindowViewModel,
         IsDesignTimeCreatable=True}">
+
     <Grid x:Name="main">
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="1" Fill="{StaticResource BordersBrush}"/>
+        <Rectangle Grid.Row="3" Fill="{StaticResource BordersBrush}"/>
+        <Menu Grid.Row="0">
+            <MenuItem Header="File" Style="{StaticResource MenuItemStyle }"
+                      Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Menu}, Path=ActualHeight}">
+            </MenuItem>
+            <MenuItem Header="About" Style="{StaticResource MenuItemStyle}"
+                      Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Menu}, Path=ActualHeight}"
+                      >
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="123*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="34*"/>
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="1" Style="{StaticResource VerticalGridSplitter}"/>
+            <Grid x:Name="Right" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Style="{StaticResource MenuStackStyle}"
+                            Grid.Column="1"
+                            Grid.Row="1">
+                    <Button Style="{StaticResource MenuButton}" Content="Load Data"/>
+                    <Button Style="{StaticResource MenuButton}" Content="Save Data"/>
+                    <Button Style="{StaticResource MenuButton}" Content="Add Voter"/>
+                    <Button Style="{StaticResource MenuButton}" Content="Remove Voter"/>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="Left">
+                <ListView Style="{StaticResource ListView}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

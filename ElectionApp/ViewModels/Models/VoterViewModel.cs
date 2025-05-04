@@ -1,9 +1,9 @@
 ﻿using ElectionApp.ViewModels.Base.VM;
 using BL.Validators;
+using BL.Dto;
 
 namespace ElectionApp.ViewModels.Models
-{
-
+{    
     internal class VoterViewModel : ViewModelBase
     {
         #region Fields
@@ -108,10 +108,13 @@ namespace ElectionApp.ViewModels.Models
 
                         break;
                     case nameof(Party):
+                        SetValidArrayValue(4, ValidationHelper.ValidateText(Party, out error));
                         break;
                     case nameof(Age):
+
                         break;
                     case nameof(ProfessionName):
+                        SetValidArrayValue(6, ValidationHelper.ValidateText(ProfessionName, out error));
                         break;
                 }
 
