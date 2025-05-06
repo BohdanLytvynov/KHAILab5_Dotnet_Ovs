@@ -75,7 +75,12 @@ namespace DAL.Repositories
             {
                 voters.RemoveAt(index);
                 return true;
-            }            
+            }
+        }
+
+        public void SaveData()
+        {
+            DataContext.SaveData();
         }
     }
 }

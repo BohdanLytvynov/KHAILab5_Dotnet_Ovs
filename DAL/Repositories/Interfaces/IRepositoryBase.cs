@@ -12,5 +12,6 @@ namespace DAL.Repositories.Interfaces
         T Get(int id);
         bool Remove(int id);
         bool Edit(int id, T entity);
+        void SaveData();
     }
 }

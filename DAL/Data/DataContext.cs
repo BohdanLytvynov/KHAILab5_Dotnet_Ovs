@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Data
 {
@@ -17,7 +14,9 @@ namespace DAL.Data
         #endregion
 
         #region Properties
-        public List<Voter> Voters { get; set; }        
+        public List<Voter> Voters { get; set; }
+
+        public bool DataLoaded { get => Voters != null && Voters.Count > 0; }
         #endregion
 
         #region Ctor
@@ -25,6 +24,12 @@ namespace DAL.Data
         {
             m_filePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "Database"
                 + Path.DirectorySeparatorChar + "Voters.json";
+
+            LoadData();
+        }
+
+        public void LoadData()
+        {
             try
             {
                 var str = IOHelper.ReadFromFile(m_filePath);
@@ -34,15 +39,26 @@ namespace DAL.Data
             catch (Exception ex)
             {
 #if DEBUG
-                Debug.WriteLine("DAL ctor. Error: " + ex.Message);
+                Debug.WriteLine("Fail to Load Data! Error: " + ex.Message);
 #endif
-            }            
+            }
         }
 
         public void SaveData()
-        { 
-            
+        {
+            try
+            {
+                var str = JsonHelper.Serialize(Voters);
+
+                IOHelper.WriteToFile(str, m_filePath);
+            }
+            catch (Exception e)
+            {
+#if DEBUG
+                Debug.WriteLine("Fail to save data! Error: " + e.Message);
+#endif
+            }
         }
-        #endregion      
+        #endregion
     }
 }

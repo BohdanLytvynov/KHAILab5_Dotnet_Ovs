@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ElectionApp.ViewModels
 {
     internal class MainWindowViewModel : ViewModelBase
@@ -42,6 +43,8 @@ namespace ElectionApp.ViewModels
             #region Init Commands
 
             #endregion
+
+            
         }
 
         #endregion
