@@ -1,6 +1,8 @@
 ﻿using ElectionApp.ViewModels.Base.VM;
 using BL.Validators;
-using BL.Dto;
+using ElectionApp.Enums;
+using System.Windows.Input;
+using ElectionApp.ViewModels.Base.Commands;
 
 namespace ElectionApp.ViewModels.Models
 {    
@@ -12,15 +14,21 @@ namespace ElectionApp.ViewModels.Models
         private string m_surename;
         private string m_name;
         private string m_lastname;
-        private int m_countyNumber;
+        private string m_countyNumber;
         private string m_party;
-        private int m_age;
+        private string m_age;
         private string m_professionName;
+
+        private int m_showNumber;
+
+        private Action m_state;
+        private bool m_IsValid;
+        
         #endregion
 
         #region Properties
 
-        public int Id { get => m_id; }
+        public int Id { get => m_id; set => m_id = value; }
 
         public string Surename 
         {
@@ -49,7 +57,7 @@ namespace ElectionApp.ViewModels.Models
             }
         }
 
-        public int CountyNumber 
+        public string CountyNumber 
         {
             get=>m_countyNumber;
             set
@@ -67,7 +75,7 @@ namespace ElectionApp.ViewModels.Models
             }
         }
 
-        public int Age 
+        public string Age 
         {
             get=> m_age;
             set 
@@ -84,6 +92,30 @@ namespace ElectionApp.ViewModels.Models
                 Set(ref m_professionName, value);
             }
         }
+
+        public Action Action 
+        {
+            get=> m_state;
+            set=>Set(ref m_state, value);
+        }
+
+        public int ShowNumber 
+        {
+            get=> m_showNumber;
+            set => Set(ref m_showNumber, value);
+        }
+
+        public bool IsValid 
+        {
+            get=> m_IsValid;
+            set=>Set(ref m_IsValid, value);
+        }
+        #endregion
+
+        #region Commands
+
+        public ICommand OnAbortDeletePressed { get; set; }
+
         #endregion
 
         #region IDataErrorInfo
@@ -96,7 +128,7 @@ namespace ElectionApp.ViewModels.Models
                 switch (columnName)
                 {
                     case nameof(Surename):
-                        SetValidArrayValue(0, ValidationHelper.IsNSLValid(Surename, out error));
+                        SetValidArrayValue(0, ValidationHelper.IsNSLValid(Surename, out error));                        
                         break;
                     case nameof(Name):
                         SetValidArrayValue(1, ValidationHelper.IsNSLValid(Name, out error));
@@ -105,36 +137,41 @@ namespace ElectionApp.ViewModels.Models
                         SetValidArrayValue(2, ValidationHelper.IsNSLValid(Lastname, out error));
                         break;
                     case nameof(CountyNumber):
-
+                        SetValidArrayValue(3, ValidationHelper.ValidateNumber(CountyNumber, out error));
                         break;
                     case nameof(Party):
                         SetValidArrayValue(4, ValidationHelper.ValidateText(Party, out error));
                         break;
                     case nameof(Age):
-
+                        SetValidArrayValue(5, ValidationHelper.ValidateNumber(Age, out error));
                         break;
                     case nameof(ProfessionName):
                         SetValidArrayValue(6, ValidationHelper.ValidateText(ProfessionName, out error));
                         break;
                 }
 
+                IsValid = ValidateFields(0, GetValidArrayCount()-1);
+
                 return error;
             }
         }
         #endregion
 
-        public VoterViewModel() : base(7)
+        public VoterViewModel() : 
+            this(-1, "enter smth", "enter smth", "enter smth", "enter smth", 
+                "enter smth", "enter smth", "enter smth")
         {
             
         }
 
-        public VoterViewModel(int id,
+        public VoterViewModel(
+            int id,
             string surename,
             string name,
             string lastname,
-            int countyNumber,
+            string countyNumber,
             string party,
-            int age,
+            string age,
             string professionName) : base(7)
         {
             m_id = id;
@@ -142,9 +179,29 @@ namespace ElectionApp.ViewModels.Models
             m_name = name;
             m_lastname = lastname;
             m_countyNumber = countyNumber;
-            m_party = party;    
+            m_party = party;
             m_age = age;
             m_professionName = professionName;
+
+            m_state = Action.None;
+            m_IsValid = false;
+
+            OnAbortDeletePressed = new Command(
+                OnAbortDeleteButtonPressedExecute,
+                CanOnAbortDeleteButtonPressedExecute
+                );
         }
+
+        #region Methods
+
+        private bool CanOnAbortDeleteButtonPressedExecute(object p) => true;
+
+        private void OnAbortDeleteButtonPressedExecute(object p)
+        { 
+            Action = Action.None;
+        }
+
+
+        #endregion
     }
 }

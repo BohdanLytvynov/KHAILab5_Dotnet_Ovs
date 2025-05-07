@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Data\JsonDataProvider.cs" />
+    <Compile Include="Data\IDataProvider.cs" />
     <Compile Include="Helpers\IOHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Models\IModelBase.cs" />

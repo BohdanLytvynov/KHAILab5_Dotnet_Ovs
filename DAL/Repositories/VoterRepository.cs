@@ -11,11 +11,11 @@ namespace DAL.Repositories
 {
     public class VoterRepository : IRepositoryBase<Voter>, IVoterRepository
     {
-        DataContext DataContext { get; set; }
+        JsonDataProvider DataContext { get; set; }
 
-        public VoterRepository(DataContext dataContext)
+        public VoterRepository(IDataProvider dataContext)
         {
-            DataContext = dataContext;
+            DataContext = dataContext as JsonDataProvider;
         }
 
         public bool Edit(int id, Voter entity)
@@ -81,6 +81,22 @@ namespace DAL.Repositories
         public void SaveData()
         {
             DataContext.SaveData();
+        }
+
+        public void Add(Voter entity)
+        {
+            Voter last = DataContext.Voters.LastOrDefault();
+
+            int index = 0;
+
+            if (last != null)
+            {
+                index = last.Id + 1;
+            }
+
+            entity.Id = index;
+
+            DataContext.Voters.Add(entity);
         }
     }
 }

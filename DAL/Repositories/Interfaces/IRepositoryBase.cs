@@ -8,6 +8,7 @@ namespace DAL.Repositories.Interfaces
 {
     public interface IRepositoryBase<T>
     {
+        void Add(T entity);
         IEnumerable<T> GetAll();
         T Get(int id);
         bool Remove(int id);

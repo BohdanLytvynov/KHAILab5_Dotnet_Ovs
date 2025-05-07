@@ -4,13 +4,27 @@
              xmlns:local="clr-namespace:ElectionApp" 
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:voterVM="clr-namespace:ElectionApp.ViewModels.Models"
-             StartupUri="Views\MainWindow.xaml">
+             ShutdownMode="OnMainWindowClose"
+             >
     <Application.Resources>
         <!--#region Sizes -->
 
         <system:Double x:Key="MenuItemFontSize">16
         </system:Double>
 
+        <system:Double x:Key="VoterFontSize">18
+        </system:Double>
+
+        <system:Double x:Key="VoterErrorFontSize">12
+        </system:Double>
+
+        <system:Double x:Key="txtmsgFontSize">16
+        </system:Double>
+
+        <!--#endregion-->
+
+        <!--#region Margins -->
+        
         <!--#endregion-->
 
         <!--#region Colors -->
@@ -83,6 +97,13 @@
             </Style.Setters>
         </Style>
 
+        <Style x:Key="VoterStack" TargetType="StackPanel">
+            <Style.Setters>
+                <Setter Property="Orientation" Value="Vertical"/>
+                <Setter Property="ItemsControl.FontSize" Value="{StaticResource VoterFontSize}"/>
+            </Style.Setters>
+        </Style>
+
         <Style x:Key="MenuButton" TargetType="Button">
             <Style.Setters>
                 <Setter Property="Margin" Value="0,10"/>
@@ -94,6 +115,33 @@
                 <Setter Property="Margin" Value="10"/>
             </Style.Setters>
         </Style>
+
+        <Style x:Key="TxtBoxInputStyle" TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="ItemsControl.FontSize" Value="{StaticResource VoterFontSize}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Border BorderBrush="OrangeRed" BorderThickness="2">
+                                <Grid>
+                                    <AdornedElementPlaceholder/>
+                                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="OrangeRed"
+                                               VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                                               FontSize="{StaticResource VoterErrorFontSize}"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="False">
+                    <Setter Property="BorderBrush" Value="#FF23A829"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <!--#endregion-->
 
         <!--#region DataTemplates -->
@@ -101,7 +149,221 @@
         <!--#region Voter -->
 
         <DataTemplate DataType="{x:Type voterVM:VoterViewModel}">
-            
+            <Border BorderBrush="Black" BorderThickness="3" CornerRadius="5"
+                    Margin="10,5" x:Name="brd"
+                    Background="White">
+
+                <StackPanel Orientation="Vertical" Margin="0,5,0,5">
+
+                    <StackPanel  Orientation="Horizontal" Style="{StaticResource VoterStack}">
+                        <TextBlock Text="{Binding ShowNumber, UpdateSourceTrigger=PropertyChanged, StringFormat=№{0})}"/>
+
+                        <Rectangle Fill="Black" Width="1" Margin="10,1,10,1"/>
+
+                        <StackPanel Orientation="Vertical">
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="Surename:"/>
+                                <TextBox x:Name="surenameTxtbx" 
+                                         Style="{StaticResource TxtBoxInputStyle}" ToolTip="Enter Voter's Surename">
+                                    <TextBox.Text>
+                                        <Binding Path="Surename" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="Name:"/>
+                                <TextBox x:Name="nameTxtbx" 
+                                         Style="{StaticResource TxtBoxInputStyle}" ToolTip="Enter Voter's Name">
+                                    <TextBox.Text>
+                                        <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="Lastname:"/>
+                                <TextBox x:Name="lastnameTxtbx" 
+                                         Style="{StaticResource TxtBoxInputStyle}" ToolTip="Enter Voter's Lastname">
+                                    <TextBox.Text>
+                                        <Binding Path="Lastname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <Rectangle Fill="Black" Width="1" Margin="10,1,10,1"/>
+
+                        <StackPanel Orientation="Vertical">
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="CountyNumber:"/>
+                                <TextBox x:Name="countyNumberTxtbx"
+                                         Style="{StaticResource TxtBoxInputStyle}" ToolTip="Enter Voter's County Number">
+                                    <TextBox.Text>
+                                        <Binding Path="CountyNumber" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="Party:"/>
+                                <TextBox x:Name="partyTxtbx" 
+                                         Style="{StaticResource TxtBoxInputStyle}" ToolTip="Enter Voter's Party">
+                                    <TextBox.Text>
+                                        <Binding Path="Party" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="Age:"/>
+                                <TextBox x:Name="ageTxtbx"
+                                         Style="{StaticResource TxtBoxInputStyle}" ToolTip="Enter Voter's Age">
+                                    <TextBox.Text>
+                                        <Binding Path="Age" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <Rectangle Fill="Black" Width="1" Margin="10,1,10,1"/>
+
+                        <StackPanel Orientation="Vertical">
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="ProfessionName:"/>
+                                <TextBox x:Name="profNameTxtbx"
+                                         Style="{StaticResource TxtBoxInputStyle}" ToolTip="Enter Voter's Profession Name">
+                                    <TextBox.Text>
+                                        <Binding Path="ProfessionName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+
+                            <Button x:Name="abortDelBtn" Content="Abort Delete" Margin="5,10,5,10"
+                                    Visibility="Collapsed"
+                                    Command="{Binding OnAbortDeletePressed}"/>
+
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <TextBlock x:Name="msg" FontSize="{StaticResource txtmsgFontSize}" 
+                               Visibility="Collapsed"/>
+                </StackPanel>
+            </Border>
+
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Action, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                    <DataTrigger.Setters>
+                        <Setter Property="Border.BorderBrush" TargetName="brd" Value="black"/>
+                        <Setter Property="Border.Background" TargetName="brd" Value="white"/>
+                        <Setter Property="TextBlock.Text" TargetName="msg" Value=""/>
+                        <Setter Property="TextBlock.Foreground" TargetName="msg" Value="Black"/>
+                        <Setter Property="TextBlock.Visibility" TargetName="msg" Value="Collapsed"/>
+                        <Setter Property="Button.Visibility" TargetName="abortDelBtn" Value="Collapsed"/>
+
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="surenameTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="nameTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="lastnameTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="countyNumberTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="partyTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="ageTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="profNameTxtbx" Value="False"/>
+                    </DataTrigger.Setters>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding Action, UpdateSourceTrigger=PropertyChanged}" Value="1">
+                    <DataTrigger.Setters>
+                        <Setter Property="Border.BorderBrush" TargetName="brd" Value="Green"/>
+                        <Setter Property="Border.Background" TargetName="brd" Value="#9927945B"/>
+                        <Setter Property="TextBlock.Text" TargetName="msg" Value="Will be added to DB..."/>
+                        <Setter Property="TextBlock.Foreground" TargetName="msg" Value="Black"/>
+                        <Setter Property="TextBlock.Visibility" TargetName="msg" Value="Visible"/>
+                        <Setter Property="Button.Visibility" TargetName="abortDelBtn" Value="Collapsed"/>
+
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="surenameTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="nameTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="lastnameTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="countyNumberTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="partyTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="ageTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="profNameTxtbx" Value="True"/>
+                    </DataTrigger.Setters>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding Action, UpdateSourceTrigger=PropertyChanged}" Value="2">
+                <DataTrigger.Setters>
+                        <Setter Property="Border.BorderBrush" TargetName="brd" Value="DarkOrange"/>
+                        <Setter Property="Border.Background" TargetName="brd" Value="#B2FDD725"/>
+                        <Setter Property="TextBlock.Text" TargetName="msg" Value="Will be changed to DB..."/>
+                        <Setter Property="TextBlock.Foreground" TargetName="msg" Value="Black"/>
+                        <Setter Property="TextBlock.Visibility" TargetName="msg" Value="Visible"/>
+                        <Setter Property="Button.Visibility" TargetName="abortDelBtn" Value="Collapsed"/>
+
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="surenameTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="nameTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="lastnameTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="countyNumberTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="partyTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="ageTxtbx" Value="True"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="profNameTxtbx" Value="True"/>
+
+                    </DataTrigger.Setters>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding Action, UpdateSourceTrigger=PropertyChanged}" Value="3">
+                    <DataTrigger.Setters>
+                        <Setter Property="Border.BorderBrush" TargetName="brd" Value="DarkRed"/>
+                        <Setter Property="Border.Background" TargetName="brd" Value="#BBCE2727"/>
+                        <Setter Property="TextBlock.Text" TargetName="msg" Value="Will be removed!"/>
+                        <Setter Property="TextBlock.Visibility" TargetName="msg" Value="Visible"/>
+                        <Setter Property="TextBlock.Foreground" TargetName="msg" Value="Black"/>
+                        <Setter Property="Button.Visibility" TargetName="abortDelBtn" Value="Visible"/>
+
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="surenameTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="nameTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="lastnameTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="countyNumberTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="partyTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="ageTxtbx" Value="False"/>
+                        <Setter Property="ItemsControl.IsEnabled" TargetName="profNameTxtbx" Value="False"/>
+                    </DataTrigger.Setters>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+
         </DataTemplate>
 
         <!--#endregion-->

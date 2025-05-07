@@ -94,6 +94,11 @@ namespace ElectionApp.ViewModels.Base.VM
             m_ValidArray[pos] = value;
         }
 
+        protected int GetValidArrayCount()
+        {
+            return m_ValidArray.Length;
+        }
+
         protected void QueueJobToDispatcher(Action action)
         { 
             if(action == null)

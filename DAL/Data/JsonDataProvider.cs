@@ -7,7 +7,7 @@ using System.IO;
 
 namespace DAL.Data
 {
-    public class DataContext
+    public class JsonDataProvider : IDataProvider
     {
         #region Fields
         private string m_filePath;
@@ -20,10 +20,12 @@ namespace DAL.Data
         #endregion
 
         #region Ctor
-        public DataContext()
+        public JsonDataProvider()
         {
             m_filePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "Database"
                 + Path.DirectorySeparatorChar + "Voters.json";
+
+            Voters = new List<Voter>();
 
             LoadData();
         }
@@ -33,6 +35,9 @@ namespace DAL.Data
             try
             {
                 var str = IOHelper.ReadFromFile(m_filePath);
+
+                if(string.IsNullOrEmpty(str))
+                    return;
 
                 Voters = JsonHelper.Deserialize(str, Voters);
             }

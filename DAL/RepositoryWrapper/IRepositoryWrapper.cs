@@ -10,5 +10,9 @@ namespace DAL.RepositoryWrapper
     public interface IRepositoryWrapper
     {
         IVoterRepository VoterRepository { get; }
+
+        void LoadData();
+
+        void SaveData();
     }
 }

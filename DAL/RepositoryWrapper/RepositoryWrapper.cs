@@ -12,7 +12,7 @@ namespace DAL.RepositoryWrapper
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        private DataContext m_context;
+        private JsonDataProvider m_context;
 
         private IVoterRepository m_VoterRepository;
 
@@ -27,14 +27,19 @@ namespace DAL.RepositoryWrapper
             }
         }
 
-        public RepositoryWrapper(DataContext dataContext)
+        public RepositoryWrapper(IDataProvider dataContext)
         {
-            m_context = dataContext;
+            m_context = dataContext as JsonDataProvider;
+        }
+        
+        public void LoadData()
+        {
+            m_context.LoadData();
         }
 
-        public void Save()
+        public void SaveData()
         {
-            m_VoterRepository.SaveData();
+            m_context.SaveData();
         }
     }
 }

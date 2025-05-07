@@ -51,14 +51,27 @@
                 <StackPanel Style="{StaticResource MenuStackStyle}"
                             Grid.Column="1"
                             Grid.Row="1">
-                    <Button Style="{StaticResource MenuButton}" Content="Load Data"/>
-                    <Button Style="{StaticResource MenuButton}" Content="Save Data"/>
-                    <Button Style="{StaticResource MenuButton}" Content="Add Voter"/>
-                    <Button Style="{StaticResource MenuButton}" Content="Remove Voter"/>
+                    <Button Style="{StaticResource MenuButton}" Content="Load Data" 
+                            Command="{Binding OnLoadDataButtonPressed}"/>
+                    <Button Style="{StaticResource MenuButton}" Content="Save Data"
+                            Command="{Binding OnSaveButtonPressed}"/>
+                    <Button Style="{StaticResource MenuButton}" Content="Add Voter"
+                            Command="{Binding OnAddButtonPressed}"/>
+                    <Button Style="{StaticResource MenuButton}" Content="Edit Voter"
+                            Command="{Binding OnEditButtonPressed}"/>
+                    <Button Style="{StaticResource MenuButton}" Content="Remove Voter"
+                            Command="{Binding OnRemoveButtonPressed}"/>
                 </StackPanel>
             </Grid>
             <Grid x:Name="Left">
-                <ListView Style="{StaticResource ListView}"/>
+                <ListView Style="{StaticResource ListView}" 
+                          ItemsSource="{Binding Voters, 
+                    UpdateSourceTrigger=PropertyChanged, 
+                    Mode=TwoWay}"
+                    SelectedIndex="{Binding SelectedVoterIndex, 
+                    UpdateSourceTrigger=PropertyChanged, 
+                    Mode=TwoWay}"
+                          />
             </Grid>
         </Grid>
     </Grid>

@@ -4,9 +4,18 @@ namespace BL.Validators
 {
     public static class ValidationHelper
     {
-        public static bool IsNSLValid(string value, out string error)
-        { 
+        public static bool IsNSLValid(string value, out string error, string defValue = "enter smth")
+        {
             error = string.Empty;
+
+            if (string.IsNullOrEmpty(value)) return false;
+
+            if (value.Equals(defValue))
+            {
+                error = "Enter value";
+                return false;
+            }
+                        
             int length = value.Length;
 
             for (int i = 0; i < length; i++)
@@ -30,6 +39,7 @@ namespace BL.Validators
         public static bool ValidateInt(int value, int start, int end, out string error)
         { 
             error = string.Empty;
+            
             if (value >= start && value <= end)
                 return true;
             else
@@ -39,9 +49,43 @@ namespace BL.Validators
             }
         }
 
-        public static bool ValidateText(string value, out string error)
+        public static bool ValidateNumber(string value, out string error, string defValue = "enter smth")
+        {
+            error = string.Empty;
+            
+            if (string.IsNullOrEmpty(value)) return false;
+
+            if (value.Equals(defValue))
+            {
+                error = "Enter value";
+                return false;
+            }
+
+            int len = value.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                if (!Char.IsDigit(value[i]))
+                {
+                    error = $"Symbol in position {i + 1} is not a digit!";
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static bool ValidateText(string value, out string error, string defValue = "enter smth")
         { 
             error = string.Empty;
+            if (string.IsNullOrEmpty(value)) return false;
+
+            if (value.Equals(defValue))
+            {
+                error = "Enter value";
+                return false;
+            }
+
             int len = value.Length;
             for (int i = 0; i < len; i++)
             {

@@ -31,7 +31,7 @@ namespace DAL.Helpers
         {
             if (!FileExists(path)) throw new FileNotFoundException($"File: {path} doesn't exists!");
 
-            File.WriteAllText(obj, path);
+            File.WriteAllText(path, obj);
         }
 
         public static void CreateFileIfNotExists(string path)
