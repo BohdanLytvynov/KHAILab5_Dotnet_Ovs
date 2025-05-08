@@ -22,8 +22,14 @@ namespace DAL.Data
         #region Ctor
         public JsonDataProvider()
         {
-            m_filePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "Database"
-                + Path.DirectorySeparatorChar + "Voters.json";
+            string DataBaseFolder = Environment.CurrentDirectory
+                + Path.DirectorySeparatorChar + "Database";
+
+            IOHelper.CreateDirectoryIfNotExists(DataBaseFolder);
+
+            m_filePath = DataBaseFolder + Path.DirectorySeparatorChar + "Voters.json";
+
+            IOHelper.CreateFileIfNotExists(m_filePath);
 
             Voters = new List<Voter>();
 
