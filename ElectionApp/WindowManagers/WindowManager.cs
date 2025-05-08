@@ -11,13 +11,13 @@ namespace ElectionApp.WindowManagers
 {
     internal class WindowManager : IWindowManager
     {
-        private IServiceProvider serviceProvider;
+        private IServiceProvider m_serviceProvider;
 
         private Dictionary<string, Window> m_windows;
 
         public WindowManager(IServiceProvider serviceProvider)
         {
-            serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            m_serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
             m_windows = new Dictionary<string, Window>();
         }
@@ -33,7 +33,7 @@ namespace ElectionApp.WindowManagers
                 return;
             }
 
-            w = (Window)serviceProvider.GetRequiredService(window);
+            w = (Window)m_serviceProvider.GetRequiredService(window);
             w.Closed += (object s, EventArgs e) => 
             {
                 m_windows.Remove(typeName);

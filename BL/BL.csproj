@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportGenerators\IReportGenerator.cs" />
+    <Compile Include="ReportGenerators\ReportGenerator.cs" />
     <Compile Include="Validators\ValidationHelper.cs" />
   </ItemGroup>
   <ItemGroup>

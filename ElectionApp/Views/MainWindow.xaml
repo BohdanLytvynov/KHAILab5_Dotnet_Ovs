@@ -24,9 +24,29 @@
         <Menu Grid.Row="0">
             <MenuItem Header="File" Style="{StaticResource MenuItemStyle }"
                       Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Menu}, Path=ActualHeight}">
+                <MenuItem Header="Load Data" Style="{StaticResource MenuItemStyle }"
+                            Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Menu}, Path=ActualHeight}"
+                          Command="{Binding OnLoadDataButtonPressed}">
+                </MenuItem>
+
+                <MenuItem Header="Save Data" Style="{StaticResource MenuItemStyle }"
+            Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Menu}, Path=ActualHeight}"
+          Command="{Binding OnSaveButtonPressed}">
+                </MenuItem>
+
+                <MenuItem Header="Add Voter" Style="{StaticResource MenuItemStyle }"
+            Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Menu}, Path=ActualHeight}"
+          Command="{Binding OnAddButtonPressed}">
+                </MenuItem>
+
+                <MenuItem Header="Generate Report" Style="{StaticResource MenuItemStyle }"
+  Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Menu}, Path=ActualHeight}"
+Command="{Binding OnGenerateReportPressed}">
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="About" Style="{StaticResource MenuItemStyle}"
                       Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Menu}, Path=ActualHeight}"
+                      Command="{Binding OnAboutButtonPressed}"
                       >
             </MenuItem>
         </Menu>
@@ -51,6 +71,8 @@
                 <StackPanel Style="{StaticResource MenuStackStyle}"
                             Grid.Column="1"
                             Grid.Row="1">
+                    <Button Style="{StaticResource MenuButton}" Content="Generate Report"
+                            Command="{Binding OnGenerateReportPressed}"/>
                     <Button Style="{StaticResource MenuButton}" Content="Load Data" 
                             Command="{Binding OnLoadDataButtonPressed}"/>
                     <Button Style="{StaticResource MenuButton}" Content="Save Data"

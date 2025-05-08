@@ -10,6 +10,8 @@ using AutoMapper;
 using System.Reflection;
 using System.Linq;
 using ElectionApp.WindowManagers;
+using BL.ReportGenerators;
+using ElectionApp.Views;
 
 namespace ElectionApp
 {
@@ -39,12 +41,41 @@ namespace ElectionApp
             services.AddSingleton<IDataProvider, JsonDataProvider>();
             services.AddSingleton<IVoterRepository, VoterRepository>();
             services.AddSingleton<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddSingleton<IReportGenerator, ReportGenerator>();
 
-            //services.AddSingleton<IWindowManager, WindowManager>();
+            services.AddSingleton<IWindowManager, WindowManager>();
 
-            services.AddSingleton<MainWindow>();
-            services.AddSingleton<MainWindowViewModel>();
             
+            services.AddSingleton<MainWindowViewModel>();
+            services.AddScoped<ReporterWindowViewModel>();
+
+            services.AddSingleton(c =>
+            {
+                var vm = c.GetRequiredService<MainWindowViewModel>();
+                var mainwindow = new MainWindow();
+
+                mainwindow.DataContext = vm;
+                vm.Dispatcher = mainwindow.Dispatcher;
+
+                return mainwindow;
+            });
+
+            services.AddTransient(c =>
+            {
+                var scope = c.CreateScope();
+
+                var repWindow = new ReporterWindow();
+                var vm = scope.ServiceProvider.GetRequiredService<ReporterWindowViewModel>();
+                repWindow.DataContext = vm;
+                vm.Dispatcher = repWindow.Dispatcher;
+                repWindow.Closed += (object sender, EventArgs e) => 
+                {
+                    scope.Dispose(); 
+                };
+
+                return repWindow;
+            });
+
             //Mapper configuration
             var mapperConfig = new MapperConfiguration(mc =>
             {
@@ -70,15 +101,9 @@ namespace ElectionApp
         {
             base.OnStartup(e); 
 
-            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            var windowManager = ServiceProvider.GetRequiredService<IWindowManager>();
 
-            var mainWindowViewModel = ServiceProvider.GetRequiredService<MainWindowViewModel>();
-
-            mainWindow.DataContext = mainWindowViewModel;
-
-            mainWindowViewModel.Dispatcher = mainWindow.Dispatcher;
-
-            mainWindow.Show();
+            windowManager.OpenWindow(typeof(MainWindow));
         }
 
         protected override void OnExit(ExitEventArgs e)

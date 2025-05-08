@@ -78,6 +78,10 @@
     <Compile Include="ViewModels\Base\Commands\CommandBase.cs" />
     <Compile Include="ViewModels\Base\Commands\Command.cs" />
     <Compile Include="ViewModels\Base\VM\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ReporterWindowViewModel.cs" />
+    <Compile Include="Views\ReporterWindow.xaml.cs">
+      <DependentUpon>ReporterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowManagers\IWindowManager.cs" />
     <Compile Include="WindowManagers\WindowManager.cs" />
     <Page Include="Views\MainWindow.xaml">
@@ -94,6 +98,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ReporterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

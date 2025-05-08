@@ -10,6 +10,8 @@ using DAL.Models;
 using System.Collections.Generic;
 using System.Linq;
 using ElectionApp.Enums;
+using ElectionApp.Views;
+using System.Windows;
 
 namespace ElectionApp.ViewModels
 {
@@ -20,6 +22,8 @@ namespace ElectionApp.ViewModels
         private string m_title;
 
         IRepositoryWrapper m_repWrapper;
+
+        IWindowManager m_windowManager;
 
         IMapper m_mapper;
 
@@ -61,16 +65,22 @@ namespace ElectionApp.ViewModels
         public ICommand OnEditButtonPressed { get; }
 
         public ICommand OnRemoveButtonPressed { get; }
+
+        public ICommand OnGenerateReportPressed { get; }
+
+        public ICommand OnAboutButtonPressed { get; }
         #endregion
 
         #region Ctor
 
         public MainWindowViewModel(IRepositoryWrapper repositoryWrapper, 
-            IMapper mapper) : this()
+            IMapper mapper, IWindowManager windowManager) : this()
         {
             m_repWrapper = repositoryWrapper;
 
             m_mapper = mapper;
+
+            m_windowManager = windowManager;
 
             var votersData = m_repWrapper.VoterRepository.GetAll();
 
@@ -111,6 +121,16 @@ namespace ElectionApp.ViewModels
             OnRemoveButtonPressed = new Command(
                 OnRemoveButtonPressedExecute,
                 CanOnRemoveButtonPressedExecute);
+
+            OnGenerateReportPressed = new Command(
+                OnGenerateReportButtonPressedExecute, 
+                CanOnGenerateReportButtonPressedExecute
+                );
+
+            OnAboutButtonPressed = new Command(
+                OnAboutButtonPressedExecute, 
+                CanOnAboutButtonPressedExecute
+                );
             #endregion
         }
 
@@ -203,6 +223,36 @@ namespace ElectionApp.ViewModels
         private void OnRemoveButtonPressedExecute(object p)
         {
             Voters[SelectedVoterIndex].Action = Action.Delete;
+        }
+
+        #endregion
+
+        #region On Generate Report Button Pressed
+
+        private bool CanOnGenerateReportButtonPressedExecute(object  p) => Voters.Count > 0;
+
+        private void OnGenerateReportButtonPressedExecute(object p)
+        {
+            m_windowManager.OpenWindow(typeof(ReporterWindow));
+        }
+
+        #endregion
+
+        #region On About Button Pressed
+
+        private bool CanOnAboutButtonPressedExecute(object p) => true;
+
+        private void OnAboutButtonPressedExecute(object p)
+        {
+            MessageBox.Show("Литивнов Богда Юрійович Гр 125 Варіант 9\n" +
+                "У передвиборчій кампанії проводиться реєстрація кандидатів у депутати.\n" +
+                " Кожен кандидат, подаючи заяву на реєстрацію, зазначає: ПІБ, номер округу, \n" +
+                "в якому він збирається балотуватися, найменування партії, \n" +
+                "яку він представляє, свій вік та професію. Прес-служба центральної \n" +
+                "виборчої комісії видає інформаційний бюлетень, у якому наводить таку \n" +
+                "інформацію: кількість поданих заяв на реєстрацію кандидатів кожної політичної партії; \n" +
+                "середній вік кандидатів від кожної політичної партії; професія, що найчастіше зустрічається для кандидатів по кожній партії. \n" +
+                "Вивести ці дані до окремої таблиці\n", Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         #endregion
